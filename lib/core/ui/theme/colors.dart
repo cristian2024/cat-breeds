@@ -9,3 +9,4 @@ class AppColors {
   static const Color carouselPink = Color(0xffFEFAFB);
 
 }
+  
