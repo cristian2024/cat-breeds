@@ -1,0 +1,9 @@
+export 'core/data.dart';
+export 'core/data/models/cat_breed/cat_breed_model.dart';
+export 'core/data/models/cat_breed/weight.dart';
+export 'core/domain.dart';
+export 'core/domain/entity/cat_entity.dart';
+export 'core/domain/repository/cats_repository.dart';
+export 'core/ui.dart';
+export 'core/ui/theme/colors.dart';
+export 'core/ui/theme/text.dart';
