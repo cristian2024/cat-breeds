@@ -1,3 +1,4 @@
+import 'package:cat_breeds/core/ui.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -5,14 +6,13 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
-
-
   const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
+    return MaterialApp(
+      theme: getLigthTheme(),
+      home: const Scaffold(
         body: Center(
           child: Text('Hello World!'),
         ),
