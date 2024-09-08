@@ -4,7 +4,6 @@ import 'package:retrofit/retrofit.dart';
 
 part 'cats_source.g.dart';
 
-
 @RestApi(baseUrl: "https://api.thecatapi.com/")
 abstract class CatBreedsSource {
   factory CatBreedsSource(
@@ -18,8 +17,13 @@ abstract class CatBreedsSource {
     @Query("limit") int limit,
   );
 
-  @GET("v1/breeds/:breed")
+  @GET("v1/breeds/{breed}")
   Future<CatBreedInfo> getBreed(
     @Path("breed") String breed,
+  );
+
+  @GET("v1/images/{image_id}")
+  Future<BreedImage> getImage(
+    @Path("image_id") String imageId,
   );
 }

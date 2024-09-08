@@ -2,7 +2,9 @@ import 'package:flutter/material.dart' show BuildContext, Widget;
 import 'package:flutter_svg/svg.dart';
 
 enum AssetSVG {
-  catHead('cat_head');
+  catHead('cat_head'),
+  brain('brain'),
+  location('location');
 
   const AssetSVG(this.fileName);
   final String fileName;

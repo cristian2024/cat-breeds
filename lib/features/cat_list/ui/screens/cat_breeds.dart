@@ -26,40 +26,20 @@ class CatBreedsScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: const Column(
-          children: [
-            // TODO(Cristian) - Add searchbar
-            Text('Search bar'),
-            Expanded(
-              child: _CatBreedList(),
-            ),
-          ],
+        body: const Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              // TODO(Cristian) - Add searchbar
+              Text('Search bar'),
+              Expanded(
+                child: _CatBreedList(),
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-}
-
-class _CatBreeds extends StatelessWidget {
-  const _CatBreeds({
-    required this.pagingController,
-  });
-
-  final PagingController<int, CatBreed> pagingController;
-
-  @override
-  Widget build(BuildContext context) {
-    return PagedListView(
-      pagingController: pagingController,
-      builderDelegate: PagedChildBuilderDelegate<CatBreed>(
-        itemBuilder: (context, item, _) {
-          return Text(
-            item.breedName,
-          );
-        },
-      ),
-    );
-    ;
   }
 }
 
@@ -115,13 +95,17 @@ class __CatBreedListState extends State<_CatBreedList> {
         }
       },
       builder: (context, state) {
-        return PagedListView(
+        // return CatBreedCardImageProvider(
+        //   imageId: "DbwiefiaY",
+        // );
+        return PagedListView.separated(
+          separatorBuilder: (_, __) {
+            return const SizedBox(height: 24);
+          },
           pagingController: _pagingController,
           builderDelegate: PagedChildBuilderDelegate<CatBreed>(
-            itemBuilder: (context, item, _) {
-              return Text(
-                item.breedName,
-              );
+            itemBuilder: (_, breed, __) {
+              return CatBreedCard.fromCatBreed(breed);
             },
           ),
         );

@@ -1,3 +1,4 @@
+
 import 'package:cat_breeds/core/domain.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'weight.dart';
@@ -165,9 +166,10 @@ class CatBreedInfo {
   /// parser to UI usable entity
   CatBreed toCatBreed() {
     return CatBreed(
+      breedImageId: referenceImageId ?? '',
       breedName: name ?? '',
       countryCodeOrigin: countryCode ?? '',
-      intelligence: intelligence ?? 0 ,
+      intelligence: intelligence ?? 0,
     );
   }
 }

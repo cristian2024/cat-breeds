@@ -1,6 +1,7 @@
 class _Configuration {
   static const String breedsApiKey = String.fromEnvironment('breeds_api_key');
   static const String breedsApiUrl = String.fromEnvironment('breeds_api_url');
+  static const String breedsImageBase = String.fromEnvironment('breed_image_base');
 }
 
 ///environment configuration singleton
@@ -11,6 +12,7 @@ class EnvironmentConfig {
     EnvData(
       _Configuration.breedsApiKey,
       _Configuration.breedsApiUrl,
+      _Configuration.breedsImageBase,
     ),
   );
 
@@ -26,9 +28,11 @@ class EnvironmentConfig {
 class EnvData {
   final String breedsApiKey;
   final String breedsApiUrl;
+  final String breedsImageBase;
 
   EnvData(
     this.breedsApiKey,
     this.breedsApiUrl,
+    this.breedsImageBase
   );
 }

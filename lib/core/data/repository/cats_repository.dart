@@ -10,11 +10,11 @@ class CatsRepositoryApi extends CatsRepository {
   @override
   Future<BreedPagination> getBreeds({
     int page = 1,
-    int limit=10,
+    int limit = 10,
   }) async {
     //TODO(Cristian) - Error validation
     //the breeds api start their search at page ==0
-    final breeds = await _source.getBreeds(page-1, limit);
+    final breeds = await _source.getBreeds(page - 1, limit);
     return BreedPagination(
       breeds: breeds,
       nextPage: page + 1,
@@ -25,5 +25,11 @@ class CatsRepositoryApi extends CatsRepository {
   @override
   Future<CatBreedInfo> getBreed(String breedId) async {
     return _source.getBreed(breedId);
+  }
+
+  ///Obtains the image associated to a breed by its [imageId]
+  @override
+  Future<BreedImage> getBreedImage(String imageId) {
+    return _source.getImage(imageId);
   }
 }
