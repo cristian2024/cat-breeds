@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 typedef BlocOf<S> = StateStreamableSource<S>;
 
-
 ///Works as a wrapper/provider for a certain [T] bloc
 class AppBlocProvider<T extends BlocOf<S>, S> extends StatelessWidget {
   const AppBlocProvider({
@@ -45,7 +44,7 @@ class AppBlocProvider<T extends BlocOf<S>, S> extends StatelessWidget {
               child: child,
             );
           }
-          return child??const SizedBox();
+          return child ?? const SizedBox();
         },
       ),
     );

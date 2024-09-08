@@ -17,11 +17,18 @@ abstract class CatBreedsSource {
     @Query("limit") int limit,
   );
 
+  @GET("v1/breeds/search")
+  Future<List<CatBreedInfo>> searchBreeds(
+    @Query("q") String word,
+  );
+
   @GET("v1/breeds/{breed}")
   Future<CatBreedInfo> getBreed(
     @Path("breed") String breed,
   );
 
+  /// the [attach_image] query parameter does not work
+  /// thus, the image must be searched separately
   @GET("v1/images/{image_id}")
   Future<BreedImage> getImage(
     @Path("image_id") String imageId,

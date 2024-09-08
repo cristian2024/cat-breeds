@@ -21,6 +21,11 @@ class CatsRepositoryApi extends CatsRepository {
     );
   }
 
+  @override
+  Future<List<CatBreedInfo>> searchBreeds({required String word}) {
+    return _source.searchBreeds(word);
+  }
+
   ///Obtains a single breed cat info referenced by its [breedId]
   @override
   Future<CatBreedInfo> getBreed(String breedId) async {

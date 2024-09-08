@@ -2,6 +2,7 @@ import 'package:cat_breeds/core.dart'
     show EnvironmentConfig, configInjection, read;
 import 'package:cat_breeds/core/ui.dart';
 import 'package:cat_breeds/features/cat_list.dart';
+import 'package:cat_breeds/features/search.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +12,6 @@ void main() {
   //calling the EnvironmentConfig for the first try
   //forcing it to create its data
   EnvironmentConfig();
-
 
   configInjection();
   runApp(const MainApp());
@@ -27,12 +27,23 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      path: '/${CatBreedsScreen.route}',
-      name: CatBreedsScreen.routeName,
-      builder: (context, state) {
-        return const CatBreedsScreen();
-      },
-    ),
+        path: '/${CatBreedsScreen.route}',
+        name: CatBreedsScreen.routeName,
+        builder: (context, state) {
+          return const CatBreedsScreen();
+        },
+        routes: [
+          GoRoute(
+            path: SearchBreed.route,
+            name: SearchBreed.routeName,
+            builder: (context, state) {
+              final word = state.pathParameters['word'];
+              return SearchBreed(
+                initialWord: word ?? '',
+              );
+            },
+          )
+        ]),
   ],
 );
 
