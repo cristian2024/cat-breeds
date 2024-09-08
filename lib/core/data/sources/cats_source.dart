@@ -15,7 +15,7 @@ abstract class CatBreedsSource {
   @GET("v1/breeds")
   Future<List<CatBreedInfo>> getBreeds(
     @Query("page") int page,
-    @Query("limit") int? limit,
+    @Query("limit") int limit,
   );
 
   @GET("v1/breeds/:breed")

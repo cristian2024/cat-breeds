@@ -1,9 +1,10 @@
-import 'package:cat_breeds/core.dart' show CatBreedsSource, createDioClient;
+import 'package:cat_breeds/core.dart'
+    show CatBreedsSource, CatsRepository, CatsRepositoryApi, createDioClient;
 import 'package:get_it/get_it.dart';
 
 part 'reader_injector.dart';
 
-GetIt _instance = GetIt.asNewInstance();
+GetIt _instance = GetIt.instance;
 
 void configInjection() {
   _setupSourcesAndOthers();
@@ -17,5 +18,8 @@ void _setupSourcesAndOthers() {
 
 void _setupRepositories() {
   //this repository needs [CatBreedsSource] already on the injector
-  _instance.registerSingleton(read());
+  
+  _instance.registerSingleton<CatsRepository>(
+    CatsRepositoryApi(read<CatBreedsSource>()),
+  );
 }

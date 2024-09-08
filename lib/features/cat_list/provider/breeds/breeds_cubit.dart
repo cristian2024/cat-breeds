@@ -21,7 +21,9 @@ class BreedsCubit extends Cubit<BreedsState> {
   Future<void> obtainNextBreedList() async {
     _state = state.copyWith(status: RequestStatus.loading);
     try {
-      final response = await _repository.getBreeds();
+      final response = await _repository.getBreeds(
+        page: state.paginationInfo.currentPage + 1,
+      );
       _state = state.copyWith(
         status: RequestStatus.finished,
         paginationInfo: BreedsPaginationInfo.fromBreedPagination(response),
@@ -31,6 +33,22 @@ class BreedsCubit extends Cubit<BreedsState> {
       _state = state.copyWith(status: RequestStatus.error);
     }
   }
+  Future<void> obtainBreedList(int page) async {
+    _state = state.copyWith(status: RequestStatus.loading);
+    try {
+      final response = await _repository.getBreeds(
+        page: page,
+      );
+      _state = state.copyWith(
+        status: RequestStatus.finished,
+        paginationInfo: BreedsPaginationInfo.fromBreedPagination(response),
+        breeds: response.breeds.toCatEntity(),
+      );
+    } catch (e) {
+      _state = state.copyWith(status: RequestStatus.error);
+    }
+  }
+  
 }
 
 extension Converter on List<CatBreedInfo> {

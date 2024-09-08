@@ -8,6 +8,7 @@ Dio createDioClient() {
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
         'x-api-key': EnvironmentConfig().envData.breedsApiKey,
+        Headers.contentTypeHeader: 'application/json'
       },
     ),
   );

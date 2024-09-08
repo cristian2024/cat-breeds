@@ -1,6 +1,9 @@
+import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
 import 'package:cat_breeds/features/cat_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class CatBreedsScreen extends StatelessWidget {
   const CatBreedsScreen({super.key});
@@ -12,7 +15,7 @@ class CatBreedsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBlocProvider(
-      create: (context) => BreedsCubit(),
+      create: (context) => BreedsCubit(read())..obtainNextBreedList(),
       child: Scaffold(
         appBar: AppBar(
           title: Hero(
@@ -23,21 +26,106 @@ class CatBreedsScreen extends StatelessWidget {
             ),
           ),
         ),
-        body: Column(
+        body: const Column(
           children: [
             // TODO(Cristian) - Add searchbar
-            const Text('Search bar'),
+            Text('Search bar'),
             Expanded(
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  return Container();
-                },
-                itemCount: 20,
-              ),
+              child: _CatBreedList(),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _CatBreeds extends StatelessWidget {
+  const _CatBreeds({
+    required this.pagingController,
+  });
+
+  final PagingController<int, CatBreed> pagingController;
+
+  @override
+  Widget build(BuildContext context) {
+    return PagedListView(
+      pagingController: pagingController,
+      builderDelegate: PagedChildBuilderDelegate<CatBreed>(
+        itemBuilder: (context, item, _) {
+          return Text(
+            item.breedName,
+          );
+        },
+      ),
+    );
+    ;
+  }
+}
+
+class _CatBreedList extends StatefulWidget {
+  const _CatBreedList();
+
+  @override
+  State<_CatBreedList> createState() => __CatBreedListState();
+}
+
+class __CatBreedListState extends State<_CatBreedList> {
+  final _pagingController = PagingController<int, CatBreed>(firstPageKey: 1);
+
+  @override
+  void initState() {
+    _pagingController.addPageRequestListener((pageKey) {
+      context.read<BreedsCubit>().obtainBreedList(pageKey);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pagingController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<BreedsCubit, BreedsState>(
+      listener: (context, state) {
+        final BreedsState(
+          :status,
+          :paginationInfo,
+          :breeds,
+        ) = state;
+        final BreedsPaginationInfo(:currentPage, :hasMore) = paginationInfo;
+        if (status.isFinished) {
+          //forget about existing record
+          //about the last page, fetch last page number from
+          //backend
+
+          final lastPage = currentPage;
+
+          if (!hasMore) {
+            _pagingController.appendLastPage(breeds);
+          } else {
+            _pagingController.appendPage(breeds, lastPage);
+          }
+        }
+        if (status.hasError) {
+          _pagingController.error = "Error";
+        }
+      },
+      builder: (context, state) {
+        return PagedListView(
+          pagingController: _pagingController,
+          builderDelegate: PagedChildBuilderDelegate<CatBreed>(
+            itemBuilder: (context, item, _) {
+              return Text(
+                item.breedName,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

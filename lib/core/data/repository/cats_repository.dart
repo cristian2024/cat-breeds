@@ -10,10 +10,11 @@ class CatsRepositoryApi extends CatsRepository {
   @override
   Future<BreedPagination> getBreeds({
     int page = 1,
-    int? limit,
+    int limit=10,
   }) async {
     //TODO(Cristian) - Error validation
-    final breeds = await _source.getBreeds(page, limit);
+    //the breeds api start their search at page ==0
+    final breeds = await _source.getBreeds(page-1, limit);
     return BreedPagination(
       breeds: breeds,
       nextPage: page + 1,

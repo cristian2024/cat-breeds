@@ -10,7 +10,7 @@
       "request": "launch",
       "type": "dart",
       "flutterMode": "debug",
-      "args": ["--dart-define-from-file=environments/dev.json"]
+      "args": ["--dart-define-from-file=environments/dev.env.json"]
     },
   ]
 }
