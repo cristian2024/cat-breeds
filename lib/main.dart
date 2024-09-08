@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
+
   runApp(const MainApp());
 }
 
@@ -10,12 +11,8 @@ final GoRouter _router = GoRouter(
   routes: <RouteBase>[
     GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const Scaffold(
-          body: Center(
-            child: Text('Hello World!'),
-          ),
-        );
+      builder: ( context,  state) {
+        return const SplashScreen();
       },
       //TODO(Cristian) - Finish initial route functioning
 
