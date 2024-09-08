@@ -46,4 +46,7 @@ extension TextThemeContext on BuildContext {
   TextStyle getDisplayLarge() {
     return _getTextTheme().displayLarge ?? _titleFont;
   }
+  TextStyle getTitleLarge() {
+    return _getTextTheme().titleLarge ?? _titleFont;
+  }
 }

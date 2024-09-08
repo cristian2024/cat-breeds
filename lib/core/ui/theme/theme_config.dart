@@ -11,6 +11,7 @@ ThemeData getLigthTheme() {
     textTheme: getTextTheme(
       _baseLightTheme,
     ),
+    scaffoldBackgroundColor: AppColors.white,
   );
 }
 
