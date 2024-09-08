@@ -1,8 +1,14 @@
 import 'package:cat_breeds/core/ui.dart';
+import 'package:cat_breeds/features/cat_list.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+
+  static const String fullRoute = '/$route';
+  static const String route = 'splash_screen';
+  static const String routeName = 'splashScreen';
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -35,22 +41,26 @@ class _SplashScreenState extends State<SplashScreen> {
     });
 
     // Ocultar el icono después de 2 segundos
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     setState(() {
       hideIcon = true;
+      nextScreen = true;
     });
 
     //execute show next screen
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(
+      const Duration(milliseconds: 1500),
+    );
     _nextScreen(context);
   }
 
-  _nextScreen(BuildContext context) {}
+  _nextScreen(BuildContext context) {
+    context.goNamed(CatBreedsScreen.routeName);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       body: LayoutBuilder(
         builder: (context, constraints) {
           final BoxConstraints(
@@ -75,15 +85,26 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               // Título
               AnimatedPositioned(
-                top: hideIcon ? maxHeight / 2 - 20 : maxHeight / 2.5,
+                top: nextScreen
+                    ? 80
+                    : hideIcon
+                        ? maxHeight / 2 - 20
+                        : maxHeight / 2.5,
                 duration: const Duration(seconds: 1),
                 child: AnimatedOpacity(
                   opacity: showTitle ? 1.0 : 0.0,
                   duration: const Duration(seconds: 1),
-                  child: Text(
-                    "Cat breeds",
-                    textAlign: TextAlign.center,
-                    style: context.getDisplayLarge(),
+                  child: AnimatedDefaultTextStyle(
+                    duration: const Duration(seconds: 1),
+                    style: context.getDisplayLarge().copyWith(
+                          fontSize: nextScreen
+                              ? context.getTitleLarge().fontSize
+                              : context.getDisplayLarge().fontSize,
+                        ),
+                    child: const Text(
+                      "Cat breeds",
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                 ),
               ),

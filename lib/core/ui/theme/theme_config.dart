@@ -11,9 +11,12 @@ ThemeData getLigthTheme() {
     textTheme: getTextTheme(
       _baseLightTheme,
     ),
+    colorScheme: _baseLightTheme.colorScheme.copyWith(
+      primary: AppColors.vanillaIce,
+    ),
+    scaffoldBackgroundColor: AppColors.white,
   );
 }
-
 
 ThemeData getDarkTheme() {
   return _baseDarkTheme.copyWith(
@@ -22,3 +25,6 @@ ThemeData getDarkTheme() {
     ),
   );
 }
+
+
+

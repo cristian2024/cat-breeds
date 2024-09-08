@@ -1,29 +1,37 @@
+import 'package:cat_breeds/core.dart'
+    show EnvironmentConfig, configInjection, read;
 import 'package:cat_breeds/core/ui.dart';
+import 'package:cat_breeds/features/cat_list.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
+  //calling the EnvironmentConfig for the first try
+  //forcing it to create its data
+  EnvironmentConfig();
 
+
+  configInjection();
   runApp(const MainApp());
 }
 
 final GoRouter _router = GoRouter(
+  initialLocation: SplashScreen.fullRoute,
   routes: <RouteBase>[
     GoRoute(
-      path: '/',
-      builder: ( context,  state) {
+      path: '/${SplashScreen.route}',
+      builder: (context, state) {
         return const SplashScreen();
       },
-      //TODO(Cristian) - Finish initial route functioning
-
-      // routes: <RouteBase>[
-      //   GoRoute(
-      //     path: 'details',
-      //     builder: (BuildContext context, GoRouterState state) {
-      //       return const DetailsScreen();
-      //     },
-      //   ),
-      // ],
+    ),
+    GoRoute(
+      path: '/${CatBreedsScreen.route}',
+      name: CatBreedsScreen.routeName,
+      builder: (context, state) {
+        return const CatBreedsScreen();
+      },
     ),
   ],
 );
@@ -33,9 +41,20 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: getLigthTheme(),
-      routerConfig: _router,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => BreedImageCubit(read())),
+      ],
+      child: MaterialApp.router(
+        supportedLocales: const [
+          Locale('en'),
+        ],
+        localizationsDelegates: const [
+          CountryLocalizations.delegate,
+        ],
+        theme: getLigthTheme(),
+        routerConfig: _router,
+      ),
     );
   }
 }

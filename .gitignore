@@ -76,4 +76,15 @@ lib/generated_plugin_registrant.dart
 *.g.dart
 .idea/
 
-.vscode/
+
+.vscode/settings.json
+
+
+# Ignora todos los archivos de ambiente y configuraciones
+*.env.json
+.vscode/*
+
+# ¡Excepto el archivo ejemplo y el launch
+!example.env.json
+# Se permite la subida del launch.json puesto que todos los valores sensibles estan almacenados en los valores de ambiente
+!.vscode/launch.json 

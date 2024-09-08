@@ -30,6 +30,10 @@ TextTheme getTextTheme(ThemeData data) {
       fontSize: 32,
       fontWeight: FontWeight.bold,
     ),
+    titleSmall: titleFont.copyWith(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+    ),
     displayLarge: titleFont.copyWith(
       fontSize: 64,
       fontWeight: FontWeight.bold,
@@ -45,5 +49,11 @@ extension TextThemeContext on BuildContext {
 
   TextStyle getDisplayLarge() {
     return _getTextTheme().displayLarge ?? _titleFont;
+  }
+  TextStyle getTitleLarge() {
+    return _getTextTheme().titleLarge ?? _titleFont;
+  }
+  TextStyle getTitleSmall() {
+    return _getTextTheme().titleSmall ?? _titleFont;
   }
 }
