@@ -1,9 +1,13 @@
+import 'package:cat_breeds/core/configuration.dart';
 import 'package:cat_breeds/core/ui.dart';
 import 'package:cat_breeds/features/cat_list.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 void main() {
+  //calling the EnvironmentConfig for the first try
+  //forcing it to create its data
+  EnvironmentConfig();
   runApp(const MainApp());
 }
 
