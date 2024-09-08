@@ -1,5 +1,13 @@
 import 'package:cat_breeds/core/ui.dart';
-import 'package:flutter/material.dart' show Brightness, FontWeight, TextTheme, ThemeData;
+import 'package:flutter/material.dart'
+    show
+        Brightness,
+        BuildContext,
+        FontWeight,
+        TextStyle,
+        TextTheme,
+        Theme,
+        ThemeData;
 import 'package:google_fonts/google_fonts.dart';
 
 final _titleFont = GoogleFonts.judson();
@@ -22,6 +30,20 @@ TextTheme getTextTheme(ThemeData data) {
       fontSize: 32,
       fontWeight: FontWeight.bold,
     ),
+    displayLarge: titleFont.copyWith(
+      fontSize: 64,
+      fontWeight: FontWeight.bold,
+    ),
     bodyMedium: textFont.copyWith(),
   );
+}
+
+extension TextThemeContext on BuildContext {
+  TextTheme _getTextTheme() {
+    return Theme.of(this).textTheme;
+  }
+
+  TextStyle getDisplayLarge() {
+    return _getTextTheme().displayLarge ?? _titleFont;
+  }
 }

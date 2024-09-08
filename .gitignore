@@ -75,3 +75,5 @@ lib/generated_plugin_registrant.dart
 # dart generated files are not being uploaded
 *.g.dart
 .idea/
+
+.vscode/
