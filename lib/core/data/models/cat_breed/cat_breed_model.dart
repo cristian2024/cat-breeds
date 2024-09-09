@@ -166,9 +166,10 @@ class CatBreedInfo {
   /// parser to UI usable entity
   CatBreed toCatBreed() {
     return CatBreed(
+      description: description?? '',
       breedImageId: referenceImageId ?? '',
       breedName: name ?? '',
-      countryCodeOrigin: countryCode ?? '',
+      countryCodeOrigin: origin ?? '',
       intelligence: intelligence ?? 0,
     );
   }

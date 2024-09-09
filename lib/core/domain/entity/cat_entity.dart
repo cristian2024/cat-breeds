@@ -4,11 +4,14 @@ class CatBreed {
   final String countryCodeOrigin;
   final int intelligence;
 
+  final String description;
+
   String? breedImage;
   final String breedImageId;
 
   CatBreed({
     required this.breedName,
+    required this.description,
     this.breedImage,
     required this.countryCodeOrigin,
     required this.intelligence,
