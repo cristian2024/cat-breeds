@@ -12,6 +12,7 @@ class CatBreedCard extends StatelessWidget {
     required this.breedName,
     required this.location,
     required this.intelligence,
+    required this.onClickCard,
   });
 
   final String imageId;
@@ -19,12 +20,18 @@ class CatBreedCard extends StatelessWidget {
   final String location;
   final int intelligence;
 
-  factory CatBreedCard.fromCatBreed(CatBreed breed) {
+  final VoidCallback onClickCard;
+
+  factory CatBreedCard.fromCatBreed(
+    CatBreed breed, {
+    required VoidCallback onClickCard,
+  }) {
     return CatBreedCard(
       breedName: breed.breedName,
       imageId: breed.breedImageId,
       intelligence: breed.intelligence,
       location: breed.countryCodeOrigin,
+      onClickCard: onClickCard,
     );
   }
 
@@ -35,20 +42,26 @@ class CatBreedCard extends StatelessWidget {
     context.read<BreedImageCubit>().obtainImage(imageId);
     return Card(
       elevation: 2,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: BlocBuilder<BreedImageCubit, BreedImageState>(
-        builder: (context, state) {
-          final image = state.imagesById[imageId];
-          if (image != null) {
-            return _CatBreedInfo(
-              imageUrl: image,
-              breedName: breedName,
-              location: location,
-              intelligence: intelligence,
-            );
-          }
-          return const SizedBox();
-        },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: InkWell(
+        onTap: onClickCard,
+        borderRadius: BorderRadius.circular(16),
+        child: BlocBuilder<BreedImageCubit, BreedImageState>(
+          builder: (context, state) {
+            final image = state.imagesById[imageId];
+            if (image != null) {
+              return _CatBreedInfo(
+                imageUrl: image,
+                breedName: breedName,
+                location: location,
+                intelligence: intelligence,
+              );
+            }
+            return const SizedBox();
+          },
+        ),
       ),
     );
   }
@@ -86,7 +99,6 @@ class _CatBreedInfo extends StatelessWidget {
                 imageUrl: imageUrl,
                 height: 300,
                 fit: BoxFit.fitHeight,
-                // imageBuilder: (context, imageProvider) {},
               ),
             ),
           ),
@@ -99,13 +111,21 @@ class _CatBreedInfo extends StatelessWidget {
           const SizedBox(height: 8),
           _SvgItem(
             icon: AssetSVG.location,
-            text: 'Location: ${getCountryName(location, context)}',
+            title: 'Location',
+            text: location,
           ),
           const SizedBox(height: 4),
           _SvgItem(
             icon: AssetSVG.brain,
-            text: 'Intelligence: $intelligence',
+            title: 'Intelligence',
+            text: intelligence.toString(),
           ),
+
+          const SizedBox(height: 4),
+          Text(
+            'See More',
+            style: context.getLabelLarge(),
+          )
         ],
       ),
     );
@@ -113,8 +133,13 @@ class _CatBreedInfo extends StatelessWidget {
 }
 
 class _SvgItem extends StatelessWidget {
-  const _SvgItem({required this.text, required this.icon});
+  const _SvgItem({
+    required this.text,
+    required this.icon,
+    required this.title,
+  });
 
+  final String title;
   final String text;
   final AssetSVG icon;
 
@@ -135,7 +160,21 @@ class _SvgItem extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 4),
-        Text(text),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              '$title: ',
+              style: context.getBodyLarge().copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            Text(
+              text,
+              style: context.getBodyMedium(),
+            ),
+          ],
+        ),
       ],
     );
   }
