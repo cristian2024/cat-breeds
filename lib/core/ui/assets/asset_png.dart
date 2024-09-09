@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart' show BuildContext, Image, Widget;
 
 enum AssetPNG {
-  catHead('cat_head');
+  catHead('cat_head'),
+  cfaIcon('cfa'),
+  vcaIcon('vca'),
+  vetStreetIcon('vetstreet'),
+  wikipediaIcon('wikipedia');
 
   const AssetPNG(this.fileName);
   final String fileName;

@@ -1,6 +1,6 @@
 import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
-import 'package:cat_breeds/core/ui/screens/splash_screen.dart';
+
 import 'package:cat_breeds/features/cat_list/ui.dart';
 import 'package:cat_breeds/features/search.dart';
 import 'package:flutter/material.dart';

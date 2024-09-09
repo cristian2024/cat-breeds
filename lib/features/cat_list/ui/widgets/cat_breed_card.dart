@@ -30,7 +30,7 @@ class CatBreedCard extends StatelessWidget {
       breedName: breed.breedName,
       imageId: breed.breedImageId,
       intelligence: breed.intelligence,
-      location: breed.countryCodeOrigin,
+      location: breed.location,
       onClickCard: onClickCard,
     );
   }

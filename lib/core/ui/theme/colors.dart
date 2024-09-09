@@ -4,10 +4,14 @@ import 'package:flutter/material.dart'
 abstract class AppColors {
   static const Color white = Color(0xFFF5F5F5);
   static const Color shipGray = Color(0xff49454F);
+  static const Color saltBox = Color(0xFF67656A);
   static const Color black = Color(0xff0E0E0E);
 
+
   static const Color vanillaIce = Color(0xffF1DBDD);
+  static const Color lavenderblush = Color.fromARGB(255, 255, 249, 250);
   static const Color carouselPink = Color(0xffFEFAFB);
+  
 }
 
 extension ThemeColors on BuildContext {

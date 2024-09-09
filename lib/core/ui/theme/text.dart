@@ -43,6 +43,10 @@ TextTheme getTextTheme(ThemeData data) {
       fontSize: 64,
       fontWeight: FontWeight.bold,
     ),
+    
+    bodySmall: textFont.copyWith(
+      fontSize: 12,
+    ),
     bodyMedium: textFont.copyWith(
       fontSize: 14,
     ),
@@ -79,6 +83,9 @@ extension TextThemeContext on BuildContext {
 
   TextStyle getBodyLarge() {
     return _getTextTheme().bodyLarge ?? _textFont;
+  }
+  TextStyle getBodySmall() {
+    return _getTextTheme().bodySmall ?? _textFont;
   }
   TextStyle getLabelLarge() {
     return _getTextTheme().labelLarge ?? _textFont;

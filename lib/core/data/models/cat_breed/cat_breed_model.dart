@@ -1,4 +1,3 @@
-
 import 'package:cat_breeds/core/domain.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'weight.dart';
@@ -166,11 +165,18 @@ class CatBreedInfo {
   /// parser to UI usable entity
   CatBreed toCatBreed() {
     return CatBreed(
-      description: description?? '',
+      description: description ?? '',
       breedImageId: referenceImageId ?? '',
       breedName: name ?? '',
-      countryCodeOrigin: origin ?? '',
+      location: origin ?? '',
       intelligence: intelligence ?? 0,
+      cfaURL: cfaUrl,
+      vcaHospitalURL: vcahospitalsUrl,
+      wikipediaURL: wikipediaUrl,
+      vetStreetURL: vetstreetUrl,
+      weight: weight,
+      lifeSpan: lifeSpan ?? '',
+      temperaments: temperament?.split(',') ?? [],
     );
   }
 }
