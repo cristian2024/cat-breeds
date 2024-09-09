@@ -1,5 +1,6 @@
 import 'package:cat_breeds/core.dart'
     show EnvironmentConfig, configInjection, read;
+import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
 import 'package:cat_breeds/features/cat_list.dart';
 import 'package:cat_breeds/features/search.dart';
@@ -27,23 +28,32 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-        path: '/${CatBreedsScreen.route}',
-        name: CatBreedsScreen.routeName,
-        builder: (context, state) {
-          return const CatBreedsScreen();
-        },
-        routes: [
-          GoRoute(
-            path: SearchBreed.route,
-            name: SearchBreed.routeName,
-            builder: (context, state) {
-              final word = state.pathParameters['word'];
-              return SearchBreed(
-                initialWord: word ?? '',
-              );
-            },
-          )
-        ]),
+      path: '/${CatBreedsScreen.route}',
+      name: CatBreedsScreen.routeName,
+      builder: (context, state) {
+        return const CatBreedsScreen();
+      },
+      routes: [
+        GoRoute(
+          path: SearchBreed.route,
+          name: SearchBreed.routeName,
+          builder: (context, state) {
+            final word = state.pathParameters['word'];
+            return SearchBreed(
+              initialWord: word ?? '',
+            );
+          },
+        ),
+        GoRoute(
+          path: BreedDetailScreen.route,
+          name: BreedDetailScreen.routeName,
+          builder: (context, state) {
+            final catBreed = state.extra as CatBreed;
+            return BreedDetailScreen(catBreed);
+          },
+        ),
+      ],
+    ),
   ],
 );
 

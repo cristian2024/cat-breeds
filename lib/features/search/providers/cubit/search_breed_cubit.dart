@@ -10,7 +10,10 @@ class SearchBreedCubit extends Cubit<SearchBreedState> {
     this._repository, {
     required String initialWord,
   }) : super(
-          SearchBreedState(searchWord: initialWord),
+          SearchBreedState(
+            searchWord: initialWord,
+            lastSearchedWord: initialWord,
+          ),
         );
 
   final CatsRepository _repository;
@@ -20,10 +23,15 @@ class SearchBreedCubit extends Cubit<SearchBreedState> {
   }
 
   void search({String? word}) async {
+    if (state.status.isLoading) {
+      //when already a search in progress, no new will be executed
+      return;
+    }
     final newWord = word ?? state.searchWord;
     _state = state.copyWith(
       status: RequestStatus.loading,
       searchWord: newWord,
+      lastSearchedWord: newWord,
     );
     try {
       final response = await _repository.searchBreeds(

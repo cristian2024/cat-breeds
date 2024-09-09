@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 enum AssetSVG {
   catHead('cat_head'),
+  emotionless('emotionless_face'),
   brain('brain'),
   location('location');
 

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart'
         Brightness,
         BuildContext,
         FontWeight,
+        TextDecoration,
         TextStyle,
         TextTheme,
         Theme,
@@ -30,6 +31,10 @@ TextTheme getTextTheme(ThemeData data) {
       fontSize: 32,
       fontWeight: FontWeight.bold,
     ),
+    titleMedium: titleFont.copyWith(
+      fontSize: 28,
+      fontWeight: FontWeight.bold,
+    ),
     titleSmall: titleFont.copyWith(
       fontSize: 24,
       fontWeight: FontWeight.bold,
@@ -38,7 +43,17 @@ TextTheme getTextTheme(ThemeData data) {
       fontSize: 64,
       fontWeight: FontWeight.bold,
     ),
-    bodyMedium: textFont.copyWith(),
+    bodyMedium: textFont.copyWith(
+      fontSize: 14,
+    ),
+    bodyLarge: textFont.copyWith(
+      fontSize: 16,
+    ),
+    labelLarge: textFont.copyWith(
+      fontSize: 15,
+      decoration: TextDecoration.underline,
+      fontWeight: FontWeight.bold,
+    ),
   );
 }
 
@@ -50,10 +65,26 @@ extension TextThemeContext on BuildContext {
   TextStyle getDisplayLarge() {
     return _getTextTheme().displayLarge ?? _titleFont;
   }
+
   TextStyle getTitleLarge() {
     return _getTextTheme().titleLarge ?? _titleFont;
   }
+  TextStyle getTitleMedium() {
+    return _getTextTheme().titleMedium ?? _titleFont;
+  }
+
   TextStyle getTitleSmall() {
     return _getTextTheme().titleSmall ?? _titleFont;
+  }
+
+  TextStyle getBodyLarge() {
+    return _getTextTheme().bodyLarge ?? _textFont;
+  }
+  TextStyle getLabelLarge() {
+    return _getTextTheme().labelLarge ?? _textFont;
+  }
+
+  TextStyle getBodyMedium() {
+    return _getTextTheme().bodyMedium ?? _textFont;
   }
 }

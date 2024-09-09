@@ -1,6 +1,5 @@
 import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
-import 'package:cat_breeds/core/ui/screens/splash_screen.dart';
 import 'package:cat_breeds/features/cat_list.dart';
 import 'package:cat_breeds/features/search.dart';
 import 'package:flutter/material.dart';
@@ -35,12 +34,15 @@ class _CatBreedsScreenState extends State<CatBreedsScreen> {
       child: CatBreedsBase(
         controller: _searchController,
         onSearch: (_) {
-          context.goNamed(
-            SearchBreed.routeName,
-            pathParameters: {
-              'word': _searchController.text,
-            },
-          );
+          final text = _searchController.text;
+          if (text.isNotEmpty) {
+            context.goNamed(
+              SearchBreed.routeName,
+              pathParameters: {
+                'word': _searchController.text,
+              },
+            );
+          }
           _searchController.text = '';
         },
         child: const _CatBreedList(),
@@ -113,7 +115,15 @@ class __CatBreedListState extends State<_CatBreedList> {
             pagingController: _pagingController,
             builderDelegate: PagedChildBuilderDelegate<CatBreed>(
               itemBuilder: (_, breed, __) {
-                return CatBreedCard.fromCatBreed(breed);
+                return CatBreedCard.fromCatBreed(
+                  breed,
+                  onClickCard: () {
+                    context.goNamed(
+                      BreedDetailScreen.routeName,
+                      extra: breed,
+                    );
+                  },
+                );
               },
             ),
           ),

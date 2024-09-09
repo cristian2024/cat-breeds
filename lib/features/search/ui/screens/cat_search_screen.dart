@@ -1,9 +1,11 @@
 import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
+import 'package:cat_breeds/core/ui/screens/splash_screen.dart';
 import 'package:cat_breeds/features/cat_list/ui.dart';
 import 'package:cat_breeds/features/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchBreed extends StatelessWidget {
   const SearchBreed({
@@ -58,34 +60,56 @@ class __SearchBodyState extends State<_SearchBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchBreedCubit, SearchBreedState>(
-      builder: (context, state) {
-        final SearchBreedState(:cats, :status) = state;
-
-        return CatBreedsBase(
-          titleExtra: 'Search',
-          controller: _controller,
-          onSearch: (word) {
-            if (status.isLoading) {
-              return;
-            }
-            context.read<SearchBreedCubit>().search(
-                  word: _controller.text,
-                );
-          },
-          child: status.isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : ListView.builder(
-                  itemCount: cats.length,
-                  itemBuilder: (context, index) {
-                    final breed = cats[index];
-                    return CatBreedCard.fromCatBreed(breed);
-                  },
-                ),
-        );
+    return CatBreedsBase(
+      titleExtra: 'Search',
+      controller: _controller,
+      onSearch: (word) {
+        context.read<SearchBreedCubit>().search(
+              word: _controller.text,
+            );
       },
+      child: BlocBuilder<SearchBreedCubit, SearchBreedState>(
+        builder: (context, state) {
+          final SearchBreedState(:cats, :status) = state;
+          if (status.isLoading) {
+            const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (cats.isEmpty) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AssetSVG.emotionless.getWidget(
+                  context,
+                  height: 250,
+                ),
+                Text(
+                  "No cat breed found containing '${state.lastSearchedWord}' word",
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 200,
+                ),
+              ],
+            );
+          }
+          return ListView.builder(
+            itemCount: cats.length,
+            itemBuilder: (context, index) {
+              final breed = cats[index];
+              return CatBreedCard.fromCatBreed(
+                breed,
+                onClickCard: () {
+                  context.goNamed(
+                    BreedDetailScreen.routeName,
+                    extra: breed,
+                  );
+                },
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
