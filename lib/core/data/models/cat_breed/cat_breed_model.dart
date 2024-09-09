@@ -171,6 +171,11 @@ class CatBreedInfo {
       breedName: name ?? '',
       countryCodeOrigin: origin ?? '',
       intelligence: intelligence ?? 0,
+      cfaURL: cfaUrl,
+      vcaHospitalURL: vcahospitalsUrl,
+      wikipediaURL: wikipediaUrl,
+      vetStreetURL: vetstreetUrl,
+      weight: weight
     );
   }
 }
