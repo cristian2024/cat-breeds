@@ -33,6 +33,7 @@ class BreedsCubit extends Cubit<BreedsState> {
       _state = state.copyWith(status: RequestStatus.error);
     }
   }
+
   Future<void> obtainBreedList(int page) async {
     _state = state.copyWith(status: RequestStatus.loading);
     try {
@@ -48,7 +49,14 @@ class BreedsCubit extends Cubit<BreedsState> {
       _state = state.copyWith(status: RequestStatus.error);
     }
   }
-  
+
+  Future<void> reset() async {
+    _state = state.copyWith(
+      status: RequestStatus.notInitiated,
+      breeds: [],
+      paginationInfo: BreedsPaginationInfo.initial(),
+    );
+  }
 }
 
 extension Converter on List<CatBreedInfo> {

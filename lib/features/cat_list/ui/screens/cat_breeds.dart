@@ -1,11 +1,14 @@
 import 'package:cat_breeds/core/domain.dart';
 import 'package:cat_breeds/core/ui.dart';
+import 'package:cat_breeds/core/ui/screens/splash_screen.dart';
 import 'package:cat_breeds/features/cat_list.dart';
+import 'package:cat_breeds/features/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class CatBreedsScreen extends StatelessWidget {
+class CatBreedsScreen extends StatefulWidget {
   const CatBreedsScreen({super.key});
 
   static const String routeName = 'breeds';
@@ -13,31 +16,34 @@ class CatBreedsScreen extends StatelessWidget {
   static const String fullRoute = '/breeds';
 
   @override
+  State<CatBreedsScreen> createState() => _CatBreedsScreenState();
+}
+
+class _CatBreedsScreenState extends State<CatBreedsScreen> {
+  final _searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AppBlocProvider(
       create: (context) => BreedsCubit(read())..obtainNextBreedList(),
-      child: Scaffold(
-        appBar: AppBar(
-          title: Hero(
-            tag: 'cat_breeds_title',
-            child: Text(
-              "Cat breeds",
-              style: context.getTitleLarge(),
-            ),
-          ),
-        ),
-        body: const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              // TODO(Cristian) - Add searchbar
-              Text('Search bar'),
-              Expanded(
-                child: _CatBreedList(),
-              ),
-            ],
-          ),
-        ),
+      child: CatBreedsBase(
+        controller: _searchController,
+        onSearch: (_) {
+          context.goNamed(
+            SearchBreed.routeName,
+            pathParameters: {
+              'word': _searchController.text,
+            },
+          );
+          _searchController.text = '';
+        },
+        child: const _CatBreedList(),
       ),
     );
   }
@@ -95,18 +101,21 @@ class __CatBreedListState extends State<_CatBreedList> {
         }
       },
       builder: (context, state) {
-        // return CatBreedCardImageProvider(
-        //   imageId: "DbwiefiaY",
-        // );
-        return PagedListView.separated(
-          separatorBuilder: (_, __) {
-            return const SizedBox(height: 24);
+        return RefreshIndicator(
+          onRefresh: () async {
+            context.read<BreedsCubit>().reset();
+            _pagingController.refresh();
           },
-          pagingController: _pagingController,
-          builderDelegate: PagedChildBuilderDelegate<CatBreed>(
-            itemBuilder: (_, breed, __) {
-              return CatBreedCard.fromCatBreed(breed);
+          child: PagedListView.separated(
+            separatorBuilder: (_, __) {
+              return const SizedBox(height: 24);
             },
+            pagingController: _pagingController,
+            builderDelegate: PagedChildBuilderDelegate<CatBreed>(
+              itemBuilder: (_, breed, __) {
+                return CatBreedCard.fromCatBreed(breed);
+              },
+            ),
           ),
         );
       },

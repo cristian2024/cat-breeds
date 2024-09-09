@@ -7,6 +7,9 @@ abstract class CatsRepository {
     int limit = 10,
   });
 
+  ///search a list of breed cats filter by [word]
+  Future<List<CatBreedInfo>> searchBreeds({required String word});
+
   ///Obtains a single breed cat info referenced by its [breedId]
   Future<CatBreedInfo> getBreed(String breedId);
 
