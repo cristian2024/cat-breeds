@@ -80,6 +80,39 @@ class BreedDetailScreen extends StatelessWidget {
                       title: 'Intelligence',
                       text: catBreed.intelligence.toString(),
                     ),
+                    const SizedBox(height: 4),
+                    SvgItem(
+                      icon: AssetSVG.brain,
+                      title: 'Life span',
+                      text: catBreed.lifeSpan,
+                      suffixText: 'years',
+                    ),
+                    if (catBreed.weight != null) ...[
+                      const SizedBox(height: 4),
+                      SvgItem(
+                        icon: AssetSVG.apple,
+                        title: 'Weight',
+                        text: catBreed.weight!.metric ?? '',
+                        suffixText: 'Kg',
+                      ),
+                    ],
+                    if (catBreed.temperaments.isNotEmpty) ...[
+                      const SizedBox(height: 8),
+                      Text(
+                        'Temperaments',
+                        style: context.getTitleMedium(),
+                      ),
+                      Wrap(
+                        alignment: WrapAlignment.center,
+                        spacing: 6,
+                        runSpacing: 6,
+                        children: catBreed.temperaments.map(
+                          (temperament) {
+                            return Chip(label: Text(temperament));
+                          },
+                        ).toList(),
+                      )
+                    ],
                     //validates if the breed has any available url
                     if (catBreed.hasUrls) ...[
                       const SizedBox(height: 8),
@@ -100,6 +133,7 @@ class BreedDetailScreen extends StatelessWidget {
                 ),
               ),
             ),
+            SafeArea(top: false, child: SizedBox()),
           ],
         ),
       ),

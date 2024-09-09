@@ -5,6 +5,7 @@ class CatBreed {
   final String location;
   final int intelligence;
   final String description;
+  final String lifeSpan;
 
   final Weight? weight;
 
@@ -16,10 +17,12 @@ class CatBreed {
   final String? vetStreetURL;
   final String? cfaURL;
 
+  final List<String> temperaments;
+
   bool get hasUrls {
-    return wikipediaURL != null &&
-        vcaHospitalURL != null &&
-        vetStreetURL != null &&
+    return wikipediaURL != null ||
+        vcaHospitalURL != null ||
+        vetStreetURL != null ||
         cfaURL != null;
   }
 
@@ -33,6 +36,8 @@ class CatBreed {
     required this.vetStreetURL,
     required this.cfaURL,
     required this.breedImageId,
+    required this.temperaments,
+    required this.lifeSpan,
     this.weight,
   });
 }

@@ -165,15 +165,18 @@ class CatBreedInfo {
   /// parser to UI usable entity
   CatBreed toCatBreed() {
     return CatBreed(
-        description: description ?? '',
-        breedImageId: referenceImageId ?? '',
-        breedName: name ?? '',
-        location: origin ?? '',
-        intelligence: intelligence ?? 0,
-        cfaURL: cfaUrl,
-        vcaHospitalURL: vcahospitalsUrl,
-        wikipediaURL: wikipediaUrl,
-        vetStreetURL: vetstreetUrl,
-        weight: weight);
+      description: description ?? '',
+      breedImageId: referenceImageId ?? '',
+      breedName: name ?? '',
+      location: origin ?? '',
+      intelligence: intelligence ?? 0,
+      cfaURL: cfaUrl,
+      vcaHospitalURL: vcahospitalsUrl,
+      wikipediaURL: wikipediaUrl,
+      vetStreetURL: vetstreetUrl,
+      weight: weight,
+      lifeSpan: lifeSpan ?? '',
+      temperaments: temperament?.split(',') ?? [],
+    );
   }
 }

@@ -2,14 +2,17 @@ import 'package:cat_breeds/core/ui.dart';
 import 'package:flutter/material.dart';
 
 class SvgItem extends StatelessWidget {
-  const SvgItem({super.key, 
+  const SvgItem({
+    super.key,
     required this.text,
+    this.suffixText,
     required this.icon,
     required this.title,
   });
 
   final String title;
   final String text;
+  final String? suffixText;
   final AssetSVG icon;
 
   @override
@@ -42,6 +45,11 @@ class SvgItem extends StatelessWidget {
               text,
               style: context.getBodyMedium(),
             ),
+            if (suffixText != null)
+              Text(
+                ' $suffixText',
+                style: context.getBodyMedium(),
+              ),
           ],
         ),
       ],
