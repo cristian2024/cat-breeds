@@ -6,7 +6,6 @@ import 'package:cat_breeds/features/cat_list/ui.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class BreedDetailScreen extends StatelessWidget {
   const BreedDetailScreen(this.catBreed, {super.key});
@@ -69,6 +68,18 @@ class BreedDetailScreen extends StatelessWidget {
                       catBreed.description,
                       style: context.getBodyMedium(),
                     ),
+                    const SizedBox(height: 8),
+                    SvgItem(
+                      icon: AssetSVG.location,
+                      title: 'Location',
+                      text: catBreed.location,
+                    ),
+                    const SizedBox(height: 4),
+                    SvgItem(
+                      icon: AssetSVG.brain,
+                      title: 'Intelligence',
+                      text: catBreed.intelligence.toString(),
+                    ),
                     //validates if the breed has any available url
                     if (catBreed.hasUrls) ...[
                       const SizedBox(height: 8),
@@ -113,14 +124,14 @@ class BreedDetailScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (wikipediaURL?.isNotEmpty ?? false)
-                  _CompanyWithIcon(
+                  CompanyWithIcon(
                     companyName: 'Wikipedia',
                     url: wikipediaURL!,
                     icon: AssetPNG.wikipediaIcon,
                   ),
                 if (cfaURL?.isNotEmpty ?? false) ...[
                   const SizedBox(height: 4),
-                  _CompanyWithIcon(
+                  CompanyWithIcon(
                     companyName: 'CFA',
                     url: cfaURL!,
                     icon: AssetPNG.cfaIcon,
@@ -128,7 +139,7 @@ class BreedDetailScreen extends StatelessWidget {
                 ],
                 if (vcaHospitalURL?.isNotEmpty ?? false) ...[
                   const SizedBox(height: 4),
-                  _CompanyWithIcon(
+                  CompanyWithIcon(
                     companyName: 'VCA',
                     url: vcaHospitalURL!,
                     icon: AssetPNG.vcaIcon,
@@ -136,7 +147,7 @@ class BreedDetailScreen extends StatelessWidget {
                 ],
                 if (vetStreetURL?.isNotEmpty ?? false) ...[
                   const SizedBox(height: 4),
-                  _CompanyWithIcon(
+                  CompanyWithIcon(
                     companyName: 'VetStreet',
                     url: vetStreetURL!,
                     icon: AssetPNG.vetStreetIcon,
@@ -147,39 +158,6 @@ class BreedDetailScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-}
-
-class _CompanyWithIcon extends StatelessWidget {
-  const _CompanyWithIcon({
-    required this.icon,
-    required this.url,
-    required this.companyName,
-  });
-  final AssetPNG icon;
-  final String companyName;
-  final String url;
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        try {
-          final uri = Uri.parse(url);
-          await launchUrl(uri);
-        } catch (_) {}
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(4.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            icon.getImg(context, height: 24),
-            const SizedBox(width: 8),
-            Text(companyName),
-          ],
-        ),
-      ),
     );
   }
 }

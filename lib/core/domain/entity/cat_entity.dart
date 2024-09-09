@@ -2,7 +2,7 @@ import 'package:cat_breeds/core/data.dart';
 
 class CatBreed {
   final String breedName;
-  final String countryCodeOrigin;
+  final String location;
   final int intelligence;
   final String description;
 
@@ -25,7 +25,7 @@ class CatBreed {
 
   const CatBreed({
     required this.breedName,
-    required this.countryCodeOrigin,
+    required this.location,
     required this.intelligence,
     required this.description,
     required this.wikipediaURL,
